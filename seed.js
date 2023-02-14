@@ -1,5 +1,6 @@
 const { green, red } = require("chalk");
 const { db, Project, Robot } = require("./server/db");
+const Projects = require("./server/db/models/Projects");
 const Robots = require("./server/db/models/Robots");
 
 const robots = [
@@ -25,16 +26,50 @@ const robots = [
   },
 ];
 
+const projects = [
+  {
+    title: "Operation 1",
+    deadline: new Date("2022-03-25"),
+    priority: 4,
+    completed: false,
+    description: "EXAMPLE DESCRIPTION",
+  },
+  {
+    title: "Operation 2",
+    deadline: new Date("2022-03-26"),
+    priority: 5,
+    completed: false,
+    description: "EXAMPLE DESCRIPTION",
+  },
+  {
+    title: "Operation 3",
+    deadline: new Date("2022-03-27"),
+    priority: 6,
+    completed: false,
+    description: "EXAMPLE DESCRIPTION",
+  },
+];
+
 const seed = async () => {
   try {
     await db.sync({ force: true });
 
     // seed your database here!
-    await Promise.all(
+    const createdRobots = await Promise.all(
       robots.map((robot) => {
         return Robots.create(robot);
       })
     );
+
+    const createdProjects = await Promise.all(
+      projects.map(([project]) => {
+        return Projects.create(project);
+      })
+    );
+
+    const robotBeingAssigned = createdRobots[0];
+    const ProjectsToBeAssigned = createdProjects.slice(0, 4);
+    await robotBeingAssigned.addProjects(ProjectsToBeAssigned);
 
     console.log(green("Seeding success!"));
     db.close();

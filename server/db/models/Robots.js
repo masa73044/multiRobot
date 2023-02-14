@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 const db = require("../database");
 
-module.exports = db.define("robot", {
+module.exports = db.define("robots", {
   name: {
     type: Sequelize.STRING,
     allowNull: false,

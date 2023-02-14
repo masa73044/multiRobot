@@ -6,13 +6,10 @@ import { Provider } from "react-redux";
 
 import store from "./store";
 import Routes from "./components/Routes";
-import { BrowserRouter as Router } from "react-router-dom";
 
 render(
   <Provider store={store}>
-    <Router>
-      <Routes />
-    </Router>
+    <Routes />
   </Provider>,
   document.getElementById("main")
 );

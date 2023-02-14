@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions */
 import { expect } from "chai";
-import { mount } from "enzyme";
+import { mount, shallow } from "enzyme";
 import sinon from "sinon";
 import React from "react";
 import configureMockStore from "redux-mock-store";
@@ -38,7 +38,7 @@ import AllRobots, {
 import AllProjects from "../../app/components/AllProjects";
 import Routes from "../../app/components/Routes";
 
-describe("Tier One: Robots", () => {
+describe.only("Tier One: Robots", () => {
   // We'll use this array of robots as dummy data for testing purposes
   const robots = [
     { id: 1, name: "R2-D2", imageUrl: "/images/r2d2.png" },
@@ -106,7 +106,9 @@ describe("Tier One: Robots", () => {
     });
 
     it('*** renders "No Robots" if this.props.robots is empty or undefined', () => {
-      throw new Error("replace this error with your own test");
+      const differentRobots = [];
+      const wrapper = mount(<UnconnectedAllRobots robots={differentRobots} />);
+      expect(wrapper.find("div")).to.include("No Robots");
     });
 
     // In a later step, we'll create a thunk, and map that thunk to AllRobots
@@ -154,7 +156,14 @@ describe("Tier One: Robots", () => {
       });
 
       it("*** returns the initial state by default", () => {
-        throw new Error("replace this error with your own test");
+        // const action = { type: "UNKNOWN" };
+
+        // testStore.dispatch(action);
+        // const newState = testStore.getState();
+        // expect(newState).toEqual(initalState);
+        const action = { type: "UNKNOWN" };
+        const newState = testStore(undefined, action);
+        expect(newState).toEqual(initialState);
       });
 
       it("reduces on SET_ROBOTS action", () => {

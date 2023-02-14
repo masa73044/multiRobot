@@ -31,3 +31,8 @@ main {
   flex-direction: column;
   justify-content: center;
 }
+
+nav a {
+  color: #c0c0c0;
+  padding: 10px;
+}

@@ -21,6 +21,7 @@ const router = require("express").Router();
 // router.use("/projects", require("./projects"));
 
 router.use("/robots", require("./robots"));
+router.use("/projects", require("./projects"));
 
 router.use((req, res, next) => {
   const err = new Error("API route not found!");

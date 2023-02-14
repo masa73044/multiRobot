@@ -1,17 +1,17 @@
 // import axios from "axios";
 import axios from "axios";
 
-const GOT_ROBOTS = "GOT_ROBOTS";
+const SET_ROBOTS = "SET_ROBOTS";
 
 export const setRobots = (robots) => ({
-  type: GOT_ROBOTS,
+  type: SET_ROBOTS,
   robots,
 });
 
 export const fetchRobots = () => {
   return async (dispatch) => {
     try {
-      const { data: robots } = await axios.get("api/robots");
+      const { data: robots } = await axios.get("/api/robots");
       dispatch(setRobots(robots));
     } catch (error) {
       console.log(error);
@@ -19,21 +19,19 @@ export const fetchRobots = () => {
   };
 };
 
-const initalState = {
-  all: [],
-};
+const initalState = [];
 
-const robotsReducer = (state = initalState, action) => {
+export default function robotsReducer(state = initalState, action) {
   switch (action.type) {
-    case GOT_ROBOTS:
-      return { ...state, all: action.robots };
+    case SET_ROBOTS:
+      return action.robots;
 
     default:
       return state;
   }
-};
+}
 
-export default robotsReducer;
+// export default robotsReducer;
 // Take a look at app/redux/index.js to see where this reducer is
 // added to the Redux store with combineReducers
 
