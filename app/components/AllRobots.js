@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { fetchRobots } from "../redux/robots";
 import { Link } from "react-router-dom";
+import AddRobot from "./AddRobot";
 
 //test
 
@@ -19,6 +20,7 @@ export class AllRobots extends React.Component {
 
     return (
       <div>
+        <AddRobot />
         {robots.length ? (
           robots.map((robot) => {
             return (

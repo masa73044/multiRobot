@@ -19,6 +19,7 @@ export const fetchSingleRobot = (robotId) => {
     }
   };
 };
+
 const initalState = {
   selectedRobot: {},
 };
