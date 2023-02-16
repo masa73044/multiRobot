@@ -1,11 +1,12 @@
-const db = require("./db");
+const db = require("../database");
 const Projects = require("./Projects");
 const Robots = require("./Robots");
 
-Robots.hasMany(Projects);
-Projects.hasMany(Robots);
+Projects.belongsToMany(Robots);
+Robots.belongsToMany(Projects);
 
-// module.exports = {
-//   Projects,
-//   Robots,
-// };
+module.exports = {
+  db,
+  Projects,
+  Robots,
+};

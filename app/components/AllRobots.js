@@ -1,6 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import { fetchRobots } from "../redux/robots";
+import { Link } from "react-router-dom";
+
 //test
 
 // Notice that we're exporting the AllRobots component twice. The named export
@@ -17,19 +19,22 @@ export class AllRobots extends React.Component {
 
     return (
       <div>
-        <div>test</div>
         {robots.length ? (
           robots.map((robot) => {
             return (
-              <ul key={robot.id}>
-                <li>{robot.name}</li>
-                <img
-                  src={robot.imageUrl}
-                  alt={robot.name}
-                  height="100"
-                  width="100"
-                />
-              </ul>
+              <div key={robot.id} className="robots">
+                <Link to={`/robots/${robot.id}`}>
+                  <img
+                    src={robot.imageUrl}
+                    alt={robot.name}
+                    height="100"
+                    width="100"
+                  />
+                  <h3>{robot.name}</h3>
+                </Link>
+                <div>{robot.fuelType}</div>
+                <div>{robot.fuelLevel}</div>
+              </div>
             );
           })
         ) : (
@@ -41,7 +46,7 @@ export class AllRobots extends React.Component {
 }
 
 const mapState = (state) => ({
-  robots: state.robots,
+  robots: state.robots.all,
 });
 
 const mapDispatch = (dispatch) => ({

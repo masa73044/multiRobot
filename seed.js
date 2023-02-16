@@ -55,21 +55,17 @@ const seed = async () => {
     await db.sync({ force: true });
 
     // seed your database here!
-    const createdRobots = await Promise.all(
+    await Promise.all(
       robots.map((robot) => {
         return Robots.create(robot);
       })
     );
 
-    const createdProjects = await Promise.all(
-      projects.map(([project]) => {
+    await Promise.all(
+      projects.map((project) => {
         return Projects.create(project);
       })
     );
-
-    const robotBeingAssigned = createdRobots[0];
-    const ProjectsToBeAssigned = createdProjects.slice(0, 4);
-    await robotBeingAssigned.addProjects(ProjectsToBeAssigned);
 
     console.log(green("Seeding success!"));
     db.close();

@@ -19,12 +19,13 @@ export const fetchRobots = () => {
   };
 };
 
-const initalState = [];
-
+const initalState = {
+  all: [],
+};
 export default function robotsReducer(state = initalState, action) {
   switch (action.type) {
     case SET_ROBOTS:
-      return action.robots;
+      return { all: action.robots };
 
     default:
       return state;
