@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { fetchRobots } from "../redux/robots";
+import { fetchRobots, intDeleteRobot } from "../redux/robots";
 import { Link } from "react-router-dom";
 import AddRobot from "./AddRobot";
 
@@ -34,6 +34,13 @@ export class AllRobots extends React.Component {
                   />
                   <h3>{robot.name}</h3>
                 </Link>
+                <button
+                  type="button"
+                  className="delete-button"
+                  onClick={() => this.props.deleteRobot(robot)}
+                >
+                  Delete
+                </button>
                 <div>{robot.fuelType}</div>
                 <div>{robot.fuelLevel}</div>
               </div>
@@ -51,8 +58,11 @@ const mapState = (state) => ({
   robots: state.robots.all,
 });
 
-const mapDispatch = (dispatch) => ({
-  getRobots: () => dispatch(fetchRobots()),
-});
+const mapDispatch = (dispatch) => {
+  return {
+    getRobots: () => dispatch(fetchRobots()),
+    deleteRobot: (robot) => dispatch(intDeleteRobot(robot.id)),
+  };
+};
 
 export default connect(mapState, mapDispatch)(AllRobots);
