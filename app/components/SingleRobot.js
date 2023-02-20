@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchSingleRobot } from "../redux/singleRobot";
+import UpdateRobot from "./UpdateRobot";
 
 export class SingleRobot extends Component {
   componentDidMount() {
@@ -20,6 +21,7 @@ export class SingleRobot extends Component {
         />
         <div>{singleRobot.fuelType}</div>
         <div>{singleRobot.fuelLevel}</div>
+        <UpdateRobot />
       </div>
     );
   }

@@ -40,4 +40,13 @@ router.delete("/:id", async (req, res, next) => {
   }
 });
 
+router.put("/:id", async (req, res, next) => {
+  try {
+    const robot = await Robots.findByPk(req.params.id);
+    res.send(await robot.update(req.body));
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;

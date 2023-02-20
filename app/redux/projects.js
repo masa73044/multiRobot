@@ -2,6 +2,7 @@ import axios from "axios";
 
 const SET_PROJECTS = "SET_PROJECTS";
 const CREATE_PROJECT = "CREATE_PROJECT";
+const DELETE_PROEJCT = "DELETE_PROEJCT";
 
 export const setProjects = (projects) => ({
   type: SET_PROJECTS,
@@ -10,6 +11,11 @@ export const setProjects = (projects) => ({
 
 export const createProject = (project) => ({
   type: CREATE_PROJECT,
+  project,
+});
+
+export const deleteProject = (project) => ({
+  type: DELETE_PROEJCT,
   project,
 });
 
@@ -36,6 +42,19 @@ export const intCreateProject = (project, history) => {
   };
 };
 
+export const intDeleteProject = (projectId) => {
+  return async (dispatch) => {
+    try {
+      const { data: project } = await axios.delete(
+        `/api/projects/${projectId}`
+      );
+      dispatch(deleteProject(project));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 const initalState = {
   all: [],
 };
@@ -47,7 +66,10 @@ export default function projectsReducer(state = initalState, action) {
 
     case CREATE_PROJECT:
       return { all: [...state.all, action.project] };
-
+    case DELETE_PROEJCT:
+      return {
+        all: state.all.filter((project) => project.id !== action.project.id),
+      };
     default:
       return state;
   }

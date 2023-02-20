@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { fetchProjects } from "../redux/projects";
+import { fetchProjects, intDeleteProject } from "../redux/projects";
 import { Link } from "react-router-dom";
 import AddProject from "./AddProject";
 
@@ -23,6 +23,13 @@ export class AllProjects extends React.Component {
                 <Link to={`/projects/${project.id}`}>
                   <li>title: {project.title}</li>
                 </Link>
+                <button
+                  type="button"
+                  className="delete-button"
+                  onClick={() => this.props.deleteProject(project)}
+                >
+                  Delete
+                </button>
                 <ul>
                   <li>deadline: {project.deadline}</li>
                 </ul>
@@ -41,8 +48,11 @@ const mapState = (state) => ({
   projects: state.projects.all,
 });
 
-const mapDispatch = (dispatch) => ({
-  getProjects: () => dispatch(fetchProjects()),
-});
+const mapDispatch = (dispatch) => {
+  return {
+    getProjects: () => dispatch(fetchProjects()),
+    deleteProject: (project) => dispatch(intDeleteProject(project.id)),
+  };
+};
 
 export default connect(mapState, mapDispatch)(AllProjects);

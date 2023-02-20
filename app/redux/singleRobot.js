@@ -12,7 +12,6 @@ export const fetchSingleRobot = (robotId) => {
   return async (dispatch) => {
     try {
       const { data: singleRobot } = await axios.get(`/api/robots/${robotId}`);
-      console.log(`Hit`, singleRobot);
       dispatch(setSingleRobot(singleRobot));
     } catch (error) {
       console.log(error);
