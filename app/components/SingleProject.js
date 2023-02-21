@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchSingleProject } from "../redux/singleProject";
+import UpdateProject from "./UpdateProject";
 
 export class SingleProject extends Component {
   componentDidMount() {
@@ -8,12 +9,16 @@ export class SingleProject extends Component {
   }
   render() {
     const { singleProject } = this.props;
+    console.log(singleProject, "SG");
+    console.log(`Hit`, singleProject.completed);
     return (
       <div>
-        <h3>{singleProject.title}</h3>
-        <h3>{singleProject.deadline}</h3>
-        <h3>{singleProject.priority}</h3>
-        <h3>{singleProject.description}</h3>
+        <div>{singleProject.title}</div>
+        <div>{singleProject.deadline}</div>
+        <div>{singleProject.priority}</div>
+        <div>{singleProject.description}</div>
+        <div>{singleProject.completed}</div>
+        <UpdateProject />
       </div>
     );
   }

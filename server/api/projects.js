@@ -38,4 +38,13 @@ router.delete("/:id", async (req, res, next) => {
   }
 });
 
+router.put("/:id", async (req, res, next) => {
+  try {
+    const project = await Projects.findByPk(req.params.id);
+    res.send(await project.update(req.body));
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;

@@ -9,6 +9,8 @@ export class SingleRobot extends Component {
   }
   render() {
     const { singleRobot } = this.props;
+    console.log(singleRobot, "SG");
+    console.log(`Hit`, singleRobot.name);
 
     return (
       <div>

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { intUpdateRobot } from "../redux/robots";
+import { intUpdateRobot, fetchSingleRobot } from "../redux/robots";
 
 export class UpdateRobot extends Component {
   constructor(props) {
@@ -9,6 +9,7 @@ export class UpdateRobot extends Component {
       name: "",
       fuelLevel: 50,
     };
+
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -21,7 +22,7 @@ export class UpdateRobot extends Component {
 
   handleSubmit(evt) {
     evt.preventDefault();
-    this.props.updateRobot({ ...this.props.robots, ...this.state });
+    this.props.updateRobot({ ...this.props.singleRobot, ...this.state });
   }
 
   render() {
@@ -46,13 +47,19 @@ export class UpdateRobot extends Component {
 }
 
 const mapState = (state) => ({
-  robots: state.robots.all,
+  singleRobot: state.robot.selectedRobot,
 });
 
-const mapDispatch = (dispatch) => {
-  return {
-    updateRobot: (robot) => dispatch(intUpdateRobot(robot)),
-  };
-};
+// const mapDispatch = (dispatch, { history }) => {
+//   return {
+//     updateRobot: (robot) => dispatch(intUpdateRobot(robot, history)),
+//     getRobot: (robotId) => dispatch(fetchSingleRobot(robotId)),
+//   };
+// };
+
+const mapDispatch = (dispatch, { history }) => ({
+  updateRobot: (robot) => dispatch(intUpdateRobot(robot, history)),
+  getRobot: (robotId) => dispatch(fetchSingleRobot(robotId)),
+});
 
 export default connect(mapState, mapDispatch)(UpdateRobot);

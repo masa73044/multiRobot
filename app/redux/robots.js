@@ -79,7 +79,7 @@ export default function robotsReducer(state = initalState, action) {
     case DELETE_ROBOT:
       return { all: state.all.filter((robot) => robot.id !== action.robot.id) };
     case UPDATE_ROBOT:
-      return { all: action.robots };
+      return { all: [...state.all, action.robot] };
     default:
       return state;
   }

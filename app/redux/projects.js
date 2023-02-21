@@ -2,7 +2,8 @@ import axios from "axios";
 
 const SET_PROJECTS = "SET_PROJECTS";
 const CREATE_PROJECT = "CREATE_PROJECT";
-const DELETE_PROEJCT = "DELETE_PROEJCT";
+const DELETE_PROJECT = "DELETE_PROJECT";
+const UPDATE_PROJECT = "UPDATE_PROJECT";
 
 export const setProjects = (projects) => ({
   type: SET_PROJECTS,
@@ -15,7 +16,12 @@ export const createProject = (project) => ({
 });
 
 export const deleteProject = (project) => ({
-  type: DELETE_PROEJCT,
+  type: DELETE_PROJECT,
+  project,
+});
+
+export const updateProject = (project) => ({
+  type: UPDATE_PROJECT,
   project,
 });
 
@@ -55,6 +61,16 @@ export const intDeleteProject = (projectId) => {
   };
 };
 
+export const intUpdateProject = (project) => {
+  return async (dispatch) => {
+    const { data: updated } = await axios.put(
+      `/api/projects/${project.id}`,
+      project
+    );
+    dispatch(updateProject(updated));
+  };
+};
+
 const initalState = {
   all: [],
 };
@@ -66,10 +82,12 @@ export default function projectsReducer(state = initalState, action) {
 
     case CREATE_PROJECT:
       return { all: [...state.all, action.project] };
-    case DELETE_PROEJCT:
+    case DELETE_PROJECT:
       return {
         all: state.all.filter((project) => project.id !== action.project.id),
       };
+    case UPDATE_PROJECT:
+      return { all: [...state.all, action.project] };
     default:
       return state;
   }
