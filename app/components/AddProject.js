@@ -7,42 +7,59 @@ export class AddProject extends Component {
     super(props);
     this.state = {
       title: "",
+      deadline: "",
+      priority: 0,
+      completed: false,
+      description: "",
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
-  handleSubmit(event) {
-    event.preventDefault();
-    console.log("hit");
-    this.props.createProject({ ...this.state });
-  }
 
   handleChange(evt) {
-    console.log("event.target -->", evt.target);
     this.setState({
-      [evt.target.title]: evt.target.value,
+      [evt.target.name]: evt.target.value,
     });
   }
 
+  handleSubmit(event) {
+    event.preventDefault();
+    this.props.createProject({ ...this.state });
+  }
+
   render() {
-    const { title } = this.state;
+    const { title, completed, priority, deadline, description } = this.state;
     const { handleChange, handleSubmit } = this;
 
     return (
       <div id="container">
-        <div id="navbar">Add Prject</div>
-        <label>
-          Title:
+        <div id="navbar"></div>
+        <form onSubmit={handleSubmit}>
+          <h2>Add Project</h2>
+          <label htmlFor="title">title:</label>
+          <input name="title" onChange={handleChange} value={title} />
+
+          <label htmlFor="deadline">deadline:</label>
+          <input name="deadline" onChange={handleChange} value={deadline} />
+
+          <label htmlFor="priority">priority:</label>
+          <input name="priority" onChange={handleChange} value={priority} />
+
+          <label htmlFor="completed">Competion Status:</label>
+          <select name="completed" onChange={handleChange} value={completed}>
+            <option value="true">true</option>
+            <option value="false">false</option>
+          </select>
+
+          <label htmlFor="description">description:</label>
           <input
-            type="text"
-            title="title"
+            name="description"
             onChange={handleChange}
-            value={title}
+            value={description}
           />
-        </label>
-        <button type="submit" onClick={handleSubmit}>
-          Submit
-        </button>
+
+          <button type="submit">Submit</button>
+        </form>
       </div>
     );
   }

@@ -10,16 +10,22 @@ export class SingleProject extends Component {
   }
   render() {
     const { singleProject } = this.props;
-    console.log(singleProject, "SG");
-    let { robots } = singleProject;
-    console.log(robots, "test");
 
-    const completed = singleProject.completed ? "true" : "false";
+    let { robots, title, completed, priority, deadline, description } =
+      singleProject;
+    const projectId = this.props.match.params.projectId;
+
     return (
       <div>
-        <div>Title: {singleProject.title}</div>
-        <div>Completion status: {completed}</div>
-        <UpdateProject />
+        <div>Title: {title}</div>
+        <div>Deadline: {deadline}</div>
+        <div>Priority: {priority}</div>
+        <div>Completion status: {completed ? "true" : "false"}</div>
+        <div>Description: {description}</div>
+
+        <Link to={`/projects/${projectId}/update`}>
+          <button type="submit">Update Project</button>
+        </Link>
         <div>
           {robots ? (
             robots.map((robot) => {

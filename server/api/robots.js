@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const { Project } = require("../db");
 const Robots = require("../db/models/Robots");
+const Projects = require("../db/models/Projects");
 
 router.get("/", async (req, res, next) => {
   try {
@@ -27,7 +28,6 @@ router.get("/:robotId", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   try {
     const robot = await Robots.create(req.body);
-    console.log(req.body, "body");
     res.send(robot);
   } catch (error) {
     next(error);
@@ -53,5 +53,16 @@ router.put("/:id", async (req, res, next) => {
     next(error);
   }
 });
+
+// router.put("/:id/remove", async (req, res, next) => {
+//   try {
+//     const robot = await Robots.findByPk(req.params.id);
+//     console.log(req.body, "body");
+//     await robot.deleteProject(req.body);
+//     res.send(robot);
+//   } catch (error) {
+//     next(error);
+//   }
+// });
 
 module.exports = router;

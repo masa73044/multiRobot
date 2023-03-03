@@ -5,6 +5,7 @@ const SET_ROBOTS = "SET_ROBOTS";
 const CREATE_ROBOT = "CREATE_ROBOT";
 const DELETE_ROBOT = "DELETE_ROBOT";
 const UPDATE_ROBOT = "UPDATE_ROBOT";
+const REMOVE_PROJECT_FROM_ROBOT = "REMOVE_PROJECT_FROM_ROBOT";
 
 export const setRobots = (robots) => ({
   type: SET_ROBOTS,
@@ -23,6 +24,11 @@ export const deleteRobot = (robot) => ({
 
 export const updateRobot = (robot) => ({
   type: UPDATE_ROBOT,
+  robot,
+});
+
+export const RemoveProjectFromRobot = (robot) => ({
+  type: REMOVE_PROJECT_FROM_ROBOT,
   robot,
 });
 
@@ -67,6 +73,18 @@ export const intUpdateRobot = (robot) => {
   };
 };
 
+export const intRemoveProjectFromRobot = (robotId, projectId) => {
+  return async (dispatch) => {
+    console.log("removeProject", projectId); // is id number
+    console.log("robotId", robotId);
+    const { data: updated } = await axios.put(
+      `/api/removeProject/${robotId}`,
+      projectId
+    );
+    dispatch(RemoveProjectFromRobot(updated));
+  };
+};
+
 const initalState = {
   all: [],
 };
@@ -79,6 +97,8 @@ export default function robotsReducer(state = initalState, action) {
     case DELETE_ROBOT:
       return { all: state.all.filter((robot) => robot.id !== action.robot.id) };
     case UPDATE_ROBOT:
+      return { all: [...state.all, action.robot] };
+    case REMOVE_PROJECT_FROM_ROBOT:
       return { all: [...state.all, action.robot] };
     default:
       return state;

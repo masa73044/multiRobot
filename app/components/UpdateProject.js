@@ -2,23 +2,52 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { intUpdateProject } from "../redux/projects";
 import { fetchRobots } from "../redux/robots";
+import { fetchSingleProject } from "../redux/singleProject";
 
 export class UpdateProject extends Component {
   constructor(props) {
     super(props);
     this.state = {
       title: "",
+      deadline: "",
+      priority: 0,
       completed: false,
+      description: "",
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 
+    this.handlAddChange = this.handlAddChange.bind(this);
     this.handleAddSubmit = this.handleAddSubmit.bind(this);
   }
 
   componentDidMount() {
     this.props.getRobots();
+    this.props.getProject(this.props.match.params.projectId);
+    const { singleProject } = this.props;
+    if (singleProject.id) {
+      this.setState({
+        title: singleProject.title,
+        deadline: singleProject.deadline,
+        priority: singleProject.priority,
+        completed: singleProject.completed,
+        description: singleProject.description,
+      });
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const { singleProject } = this.props;
+    if (!prevProps.singleProject.id && !prevProps.robots) {
+      this.setState({
+        title: singleProject.title,
+        deadline: singleProject.deadline,
+        priority: singleProject.priority,
+        completed: singleProject.completed,
+        description: singleProject.description,
+      });
+    }
   }
 
   handleChange(evt) {
@@ -29,7 +58,9 @@ export class UpdateProject extends Component {
 
   handleSubmit(evt) {
     evt.preventDefault();
+    console.log({ ...this.props.singleProject, ...this.state });
     this.props.updateProject({ ...this.props.singleProject, ...this.state });
+    this.props.history.push(`/projects/${this.props.match.params.projectId}`);
   }
 
   handlAddChange(evt) {}
@@ -37,24 +68,40 @@ export class UpdateProject extends Component {
   handleAddSubmit(evt) {}
 
   render() {
-    const { title, completed } = this.state;
-    const { handleSubmit, handleChange, handleAddSubmit, handlAddChange } =
+    const { title, completed, priority, deadline, description } = this.state;
+    const { handleSubmit, handleChange, handlAddChange, handleAddSubmit } =
       this;
-    const { robots } = this.props;
-    console.log("test", robots);
+    const { robots, singleProject } = this.props;
 
     return (
       <div>
         <form onSubmit={handleSubmit}>
-          <h2>Update Project</h2>
+          <h2>{`Update Project: ${singleProject.title}`}</h2>
           <label htmlFor="title">title:</label>
           <input name="title" onChange={handleChange} value={title} />
 
+          <label htmlFor="deadline">deadline:</label>
+          <input name="deadline" onChange={handleChange} value={deadline} />
+
+          <label htmlFor="priority">priority:</label>
+          <input name="priority" onChange={handleChange} value={priority} />
+
           <label htmlFor="completed">Competion Status:</label>
-          <input name="completed" onChange={handleChange} value={completed} />
+          <select name="completed" onChange={handleChange} value={completed}>
+            <option value="true">true</option>
+            <option value="false">false</option>
+          </select>
+
+          <label htmlFor="description">description:</label>
+          <input
+            name="description"
+            onChange={handleChange}
+            value={description}
+          />
 
           <button type="submit">Submit</button>
         </form>
+
         <div>
           <h2>Robots</h2>
           <select onChange={handlAddChange}>
@@ -77,6 +124,7 @@ const mapState = (state) => ({
 });
 
 const mapDispatch = (dispatch) => ({
+  getProject: (projectId) => dispatch(fetchSingleProject(projectId)),
   updateProject: (project) => dispatch(intUpdateProject(project)),
   getRobots: () => dispatch(fetchRobots()),
 });

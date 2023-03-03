@@ -77,15 +77,15 @@ export const intUpdateProject = (project) => {
   };
 };
 
-export const intRemoveProject = (project, robotId) => {
-  return async (dispatch) => {
-    const { data: updated } = await axios.put(
-      `/api/projects/${project.id}/`,
-      robotId
-    );
-    dispatch(updateProject(updated));
-  };
-};
+// export const intRemoveProject = (project, robotId) => {
+//   return async (dispatch) => {
+//     const { data: updated } = await axios.put(
+//       `/api/projects/${project.id}/`,
+//       robotId
+//     );
+//     dispatch(updateProject(updated));
+//   };
+// };
 
 const initalState = {
   all: [],

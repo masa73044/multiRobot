@@ -23,6 +23,15 @@ export class AllProjects extends React.Component {
                 <Link to={`/projects/${project.id}`}>
                   <li>title: {project.title}</li>
                 </Link>
+
+                <ul>
+                  <li>deadline: {project.deadline}</li>
+                  <li>priority: {project.prority}</li>
+                  <li>
+                    competition status: {project.completed ? "true" : "false"}
+                  </li>
+                  <li>description: {project.description}</li>
+                </ul>
                 <button
                   type="button"
                   className="delete-button"
@@ -30,9 +39,6 @@ export class AllProjects extends React.Component {
                 >
                   Delete
                 </button>
-                <ul>
-                  <li>deadline: {project.deadline}</li>
-                </ul>
               </div>
             );
           })

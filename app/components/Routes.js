@@ -13,8 +13,7 @@ const Routes = () => {
     <Router>
       <div>
         <nav>
-          <Link to="/Home">Home</Link>
-
+          <Link to="/">Home</Link>
           <Link to="/robots">Robots</Link>
           <Link to="/projects">Projects</Link>
         </nav>
@@ -25,6 +24,11 @@ const Routes = () => {
           <Route exact path="/robots/:robotId" component={SingleRobot} />
           <Route exact path="/projects/:projectId" component={SingleProject} />
           <Route exact path="/robots/:robotId/update" component={UpdateRobot} />
+          <Route
+            exact
+            path="/projects/:projectId/update"
+            component={UpdateProject}
+          />
         </Switch>
       </div>
     </Router>

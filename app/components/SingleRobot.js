@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { fetchSingleRobot } from "../redux/singleRobot";
 import UpdateRobot from "./UpdateRobot";
 import { Link, Route } from "react-router-dom";
-import { intRemoveProject } from "../redux/projects";
+import { intRemoveProjectFromRobot } from "../redux/robots";
 
 export class SingleRobot extends Component {
   constructor() {
@@ -44,7 +44,12 @@ export class SingleRobot extends Component {
                 <button
                   type="button"
                   className="delete-button"
-                  onClick={() => this.props.removeProject(project)}
+                  onClick={() =>
+                    this.props.removeProject(
+                      this.props.match.params.robotId,
+                      project
+                    )
+                  }
                 >
                   Delete
                 </button>
@@ -70,8 +75,8 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => ({
   getRobot: (robotId) => dispatch(fetchSingleRobot(robotId)),
-  removeProject: (project, robotId) =>
-    dispatch(intRemoveProject(project, robotId)),
+  removeProject: (robotId, project) =>
+    dispatch(intRemoveProjectFromRobot(robotId, project.id)),
 });
 
 export default connect(mapState, mapDispatch)(SingleRobot);

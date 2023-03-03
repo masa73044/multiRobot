@@ -75,12 +75,16 @@ const seed = async () => {
     });
 
     const allProjects = await Project.findAll();
-    // console.log("AP", allProjects);
-    console.log("AP 0", allProjects[0]);
-    console.log("megaTron", MEGATRON);
+    const project1 = await Project.findByPk(1);
+    console.log("project1", project1);
+
+    console.log("AP", allProjects);
+    // console.log("AP 0", allProjects[0]);
+    // console.log("megaTron", MEGATRON);
 
     await MEGATRON.addProject(allProjects[0]);
     await MEGATRON.addProject(allProjects[1]);
+    await MEGATRON.removeProject(project1); //deletes
 
     db.close();
   } catch (err) {
