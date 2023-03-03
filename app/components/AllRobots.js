@@ -21,34 +21,38 @@ export class AllRobots extends React.Component {
     return (
       <div>
         <AddRobot />
-        {robots.length ? (
-          robots.map((robot) => {
-            return (
-              <div key={robot.id} className="robots">
-                <Link to={`/robots/${robot.id}`}>
-                  <img
-                    src={robot.imageUrl}
-                    alt={robot.name}
-                    height="100"
-                    width="100"
-                  />
-                  <h3>{robot.name}</h3>
-                </Link>
-                <button
-                  type="button"
-                  className="delete-button"
-                  onClick={() => this.props.deleteRobot(robot)}
-                >
-                  Delete
-                </button>
-                <div>{robot.fuelType}</div>
-                <div>{robot.fuelLevel}</div>
-              </div>
-            );
-          })
-        ) : (
-          <div>No Robots</div>
-        )}
+        <div id="robot-container">
+          {robots.length ? (
+            robots.map((robot) => {
+              return (
+                <div key={robot.id} className="robots-wrapper">
+                  <div className="robots">
+                    <Link to={`/robots/${robot.id}`}>
+                      <img
+                        src={robot.imageUrl}
+                        alt={robot.name}
+                        height="100"
+                        width="100"
+                      />
+                      <h3>{robot.name}</h3>
+                    </Link>
+                    <div>{robot.fuelType}</div>
+                    <div>{robot.fuelLevel}</div>
+                    <button
+                      type="button"
+                      className="delete-button"
+                      onClick={() => this.props.deleteRobot(robot)}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              );
+            })
+          ) : (
+            <div>No Robots</div>
+          )}
+        </div>
       </div>
     );
   }

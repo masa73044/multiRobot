@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 const db = require("../database");
 
-module.exports = db.define("robot", {
+const Robot = db.define("robot", {
   name: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -22,6 +22,9 @@ module.exports = db.define("robot", {
   },
   imageUrl: {
     type: Sequelize.STRING,
-    defaultValue: "https://via.placeholder.com/200x200",
+    defaultValue:
+      "https://i.ibb.co/X39mNct/Screenshot-2023-02-28-at-1-46-05-AM.png",
   },
 });
+
+module.exports = Robot;

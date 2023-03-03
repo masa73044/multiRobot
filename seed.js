@@ -1,34 +1,33 @@
 const { green, red } = require("chalk");
 const { db, Project, Robot } = require("./server/db");
-const Projects = require("./server/db/models/Projects");
-const Robots = require("./server/db/models/Robots");
 
 const robots = [
   {
-    name: "MEGATRON",
+    name: "SERAPHINE 99",
     fuelType: "gas",
     fuelLevel: 50,
     imageUrl:
-      "https://target.scene7.com/is/image/Target/GUEST_3d2a8073-36e6-4cec-8c8c-872639105820?wid=488&hei=488&fmt=pjpeg",
+      "https://i.ibb.co/hCy96Vf/Screenshot-2023-02-28-at-1-41-57-AM.png",
   },
   {
     name: "R2D2",
     fuelType: "gas",
     fuelLevel: 50,
     imageUrl:
-      "https://target.scene7.com/is/image/Target/GUEST_9766bfa7-3fcb-4f4c-9576-15e17ccc1044?wid=488&hei=488&fmt=pjpeg",
+      "https://i.ibb.co/w6TnqHG/Screenshot-2023-02-28-at-1-45-39-AM.png",
   },
   {
-    name: "KNIGHTMARE",
+    name: "MEGATRON",
     fuelType: "gas",
     fuelLevel: 50,
-    imageUrl: "https://images.heb.com/is/image/HEBGrocery/000121396",
+    imageUrl:
+      "https://i.ibb.co/kD8Xw3r/Screenshot-2023-02-28-at-1-45-49-AM.png",
   },
 ];
 
 const projects = [
   {
-    title: "Operation 1",
+    title: "MEGAMEGA 1",
     deadline: new Date("2022-03-25"),
     priority: 4,
     completed: false,
@@ -57,17 +56,32 @@ const seed = async () => {
     // seed your database here!
     await Promise.all(
       robots.map((robot) => {
-        return Robots.create(robot);
+        return Robot.create(robot);
       })
     );
 
     await Promise.all(
       projects.map((project) => {
-        return Projects.create(project);
+        return Project.create(project);
       })
     );
 
     console.log(green("Seeding success!"));
+
+    const MEGATRON = await Robot.findOne({
+      where: {
+        name: "MEGATRON",
+      },
+    });
+
+    const allProjects = await Project.findAll();
+    // console.log("AP", allProjects);
+    console.log("AP 0", allProjects[0]);
+    console.log("megaTron", MEGATRON);
+
+    await MEGATRON.addProject(allProjects[0]);
+    await MEGATRON.addProject(allProjects[1]);
+
     db.close();
   } catch (err) {
     console.log(red(err));

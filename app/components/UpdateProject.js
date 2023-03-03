@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { intUpdateProject, fetchSingleRobot } from "../redux/projects";
+import { intUpdateProject } from "../redux/projects";
+import { fetchRobots } from "../redux/robots";
 
 export class UpdateProject extends Component {
   constructor(props) {
@@ -12,6 +13,12 @@ export class UpdateProject extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+
+    this.handleAddSubmit = this.handleAddSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.getRobots();
   }
 
   handleChange(evt) {
@@ -25,9 +32,16 @@ export class UpdateProject extends Component {
     this.props.updateProject({ ...this.props.singleProject, ...this.state });
   }
 
+  handlAddChange(evt) {}
+
+  handleAddSubmit(evt) {}
+
   render() {
     const { title, completed } = this.state;
-    const { handleSubmit, handleChange } = this;
+    const { handleSubmit, handleChange, handleAddSubmit, handlAddChange } =
+      this;
+    const { robots } = this.props;
+    console.log("test", robots);
 
     return (
       <div>
@@ -41,6 +55,17 @@ export class UpdateProject extends Component {
 
           <button type="submit">Submit</button>
         </form>
+        <div>
+          <h2>Robots</h2>
+          <select onChange={handlAddChange}>
+            {robots.map((robot) => {
+              return <option key={robot.id}>{robot.name}</option>;
+            })}
+          </select>
+          <button type="button" onClick={handleAddSubmit}>
+            Add Robot
+          </button>
+        </div>
       </div>
     );
   }
@@ -48,11 +73,12 @@ export class UpdateProject extends Component {
 
 const mapState = (state) => ({
   singleProject: state.project.selectedProject,
+  robots: state.robots.all,
 });
 
 const mapDispatch = (dispatch) => ({
   updateProject: (project) => dispatch(intUpdateProject(project)),
-  // getProject: (robotId) => dispatch(fetchSingleRobot(robotId)),
+  getRobots: () => dispatch(fetchRobots()),
 });
 
 export default connect(mapState, mapDispatch)(UpdateProject);

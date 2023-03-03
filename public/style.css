@@ -2,21 +2,57 @@
  * Hi! I'm your stylesheet! I've got some sensible defaults here,
  * but feel free to change me to your heart's content!
  */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap");
 
 * {
   box-sizing: border-box;
-  font-family: arial, sans-serif;
+  /* font-family: "Poppins", sans-serif; */
+}
+
+@font-face {
+  font-family: "Ailerons";
+  src: url(./assets/Ailerons-Typeface.otf);
+  font-weight: normal;
+  font-style: normal;
+}
+
+h1,
+h3 {
+  font-family: "Ailerons";
+  color: #ffffff;
+}
+
+h2,
+label {
+  font-family: "Poppins";
+}
+
+p {
+  font-family: "Poppins";
+  color: #ffffff;
+}
+
+.homeText {
+  position: absolute;
+  top: 50%;
+  left: 5%;
+  transform: translate(0, -50%);
+  text-align: left;
 }
 
 body {
   background: linear-gradient(#ffffff, #c0c0c0);
-  height: 100vh;
+  /* height: 100vh; */
   padding: 0;
   margin: 0;
   width: 100vw;
+  background-image: url(./assets/bgMain.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 nav {
+  font-family: "Ailerons";
   align-items: center;
   background-color: #333333;
   color: #c0c0c0;
@@ -25,18 +61,96 @@ nav {
   padding: 10px;
 }
 
-main {
+/* main {
   align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
+} */
+
+.main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 nav a {
-  color: #c0c0c0;
+  color: #ffffff;
+  font-size: xx-large;
   padding: 10px;
 }
 
-.robots {
+#robot-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.robot-wrapper {
+  width: 32%;
+  padding-bottom: 18%; /* 32:18, i.e. 16:9 */
+  margin-bottom: 2%; /* (100-32*3)/2 */
+  background: #ffffff;
+  margin: 10px;
+}
+
+div {
+  color: #ffffff;
+}
+
+li {
+  color: #ffffff;
+}
+
+.selection {
+  display: flex;
+  flex-direction: column;
+}
+
+.selection label {
+  margin-bottom: 10px;
+}
+
+.selection button {
+  width: 100px;
+  height: 40px;
+  margin: 10px;
+}
+
+.singleRobot {
   padding: 10px;
+  border: 5px solid white;
+  width: 30%;
+  box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.5);
+}
+
+/* .updateForm {
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  margin-bottom: 20px;
+} */
+.updateForm {
+  display: flex;
+  flex-direction: column;
+}
+input,
+option,
+select {
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border-radius: 0.25rem;
+  border: 1px solid #ccc;
+  width: 200px;
+}
+
+button[type="submit"] {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 0.25rem;
+  border: none;
+  cursor: pointer;
+  width: 100px;
 }

@@ -7,6 +7,10 @@ export class AddRobot extends Component {
     super(props);
     this.state = {
       name: "",
+      fuelType: "electric",
+      fuelLevel: 0,
+      imageUrl:
+        "https://i.ibb.co/X39mNct/Screenshot-2023-02-28-at-1-46-05-AM.png",
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -25,19 +29,44 @@ export class AddRobot extends Component {
   }
 
   render() {
-    const { name } = this.state;
+    const { name, fuelType, fuelLevel, imageUrl } = this.state;
     const { handleChange, handleSubmit } = this;
 
     return (
       <div id="container">
         <div id="navbar">Add Robot</div>
-        <label>
-          Name:
-          <input type="text" name="name" onChange={handleChange} value={name} />
-        </label>
-        <button type="submit" onClick={handleSubmit}>
-          Submit
-        </button>
+        <div className="selection">
+          <label>
+            Name:
+            <input
+              type="text"
+              name="name"
+              onChange={handleChange}
+              value={name}
+            />
+          </label>
+          <label>
+            Fuel Type:
+            <input
+              type="text"
+              name="fuelType"
+              onChange={handleChange}
+              value={fuelType}
+            />
+          </label>
+          <label>
+            Fuel Level:
+            <input
+              type="text"
+              name="fuelLevel"
+              onChange={handleChange}
+              value={fuelLevel}
+            />
+          </label>
+          <button type="submit" onClick={handleSubmit}>
+            Submit
+          </button>
+        </div>
       </div>
     );
   }

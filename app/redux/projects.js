@@ -4,6 +4,7 @@ const SET_PROJECTS = "SET_PROJECTS";
 const CREATE_PROJECT = "CREATE_PROJECT";
 const DELETE_PROJECT = "DELETE_PROJECT";
 const UPDATE_PROJECT = "UPDATE_PROJECT";
+const REMOVE_PROJECT = "REMOVE_PROJECT";
 
 export const setProjects = (projects) => ({
   type: SET_PROJECTS,
@@ -22,6 +23,11 @@ export const deleteProject = (project) => ({
 
 export const updateProject = (project) => ({
   type: UPDATE_PROJECT,
+  project,
+});
+
+export const removeProject = (project) => ({
+  type: REMOVE_PROJECT,
   project,
 });
 
@@ -66,6 +72,16 @@ export const intUpdateProject = (project) => {
     const { data: updated } = await axios.put(
       `/api/projects/${project.id}`,
       project
+    );
+    dispatch(removeProject(updated));
+  };
+};
+
+export const intRemoveProject = (project, robotId) => {
+  return async (dispatch) => {
+    const { data: updated } = await axios.put(
+      `/api/projects/${project.id}/`,
+      robotId
     );
     dispatch(updateProject(updated));
   };

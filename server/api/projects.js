@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Projects = require("../db/models/Projects");
+const Robot = require("../db/models/Robots");
 
 router.get("/", async (req, res, next) => {
   try {
@@ -12,7 +13,12 @@ router.get("/", async (req, res, next) => {
 
 router.get("/:projectId", async (req, res, next) => {
   try {
-    const project = await Projects.findByPk(req.params.projectId);
+    const project = await Projects.findByPk(req.params.projectId, {
+      include: {
+        model: Robot,
+      },
+    });
+
     res.send(project);
   } catch (error) {
     next(error);
